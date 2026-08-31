@@ -1,0 +1,463 @@
+<title>Roadmap do Korno's</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #FBF6EF;
+    --surface: #FFFFFF;
+    --surface-2: #F4ECE0;
+    --ink: #2B241D;
+    --ink-muted: #746657;
+    --ink-faint: #A6987F;
+    --border: #E6DBC8;
+    --accent: #B84B28;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F3D9C6;
+    --amber: #C7862B;
+    --status-todo: #A6987F;
+    --status-progress: #2E6A8E;
+    --status-progress-soft: #DCEAF2;
+    --status-done: #4C7A4A;
+    --status-done-soft: #DEEBDA;
+    --shadow: 0 1px 2px rgba(43,36,29,0.06), 0 8px 24px -12px rgba(43,36,29,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #1B1712;
+      --surface: #241F18;
+      --surface-2: #2C261D;
+      --ink: #F0E7D8;
+      --ink-muted: #B7A78E;
+      --ink-faint: #85765D;
+      --border: #3B3324;
+      --accent: #E27A45;
+      --accent-ink: #241407;
+      --accent-soft: #4A2F1E;
+      --amber: #E0A24C;
+      --status-todo: #85765D;
+      --status-progress: #6FA8CB;
+      --status-progress-soft: #223441;
+      --status-done: #82B173;
+      --status-done-soft: #223923;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #1B1712;
+    --surface: #241F18;
+    --surface-2: #2C261D;
+    --ink: #F0E7D8;
+    --ink-muted: #B7A78E;
+    --ink-faint: #85765D;
+    --border: #3B3324;
+    --accent: #E27A45;
+    --accent-ink: #241407;
+    --accent-soft: #4A2F1E;
+    --amber: #E0A24C;
+    --status-todo: #85765D;
+    --status-progress: #6FA8CB;
+    --status-progress-soft: #223441;
+    --status-done: #82B173;
+    --status-done-soft: #223923;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, serif;
+    text-wrap:balance;
+    margin:0;
+  }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  .wrap{ max-width:960px; margin:0 auto; padding:32px 20px 80px; }
+
+  /* header */
+  header.top{
+    display:flex; flex-direction:column; gap:18px;
+    padding-bottom:28px; margin-bottom:28px;
+    border-bottom:2px solid var(--border);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  header.top h1{ font-size:clamp(32px,5vw,44px); font-weight:600; color:var(--ink); }
+  header.top .sub{ color:var(--ink-muted); font-size:15.5px; max-width:60ch; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:6px; }
+  .chip{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--surface-2); border:1px solid var(--border);
+    color:var(--ink); font-size:13px; font-weight:500;
+    padding:5px 12px; border-radius:100px;
+  }
+  .chip.lead{ background:var(--accent-soft); border-color:var(--accent); color:var(--ink); font-weight:600; }
+  .chip a{ color:inherit; }
+  .meta-row .sep{ color:var(--ink-faint); font-size:13px; }
+
+  /* callout */
+  .callout{
+    background:var(--surface-2); border:1px solid var(--border); border-left:4px solid var(--amber);
+    border-radius:8px; padding:14px 16px; font-size:14px; color:var(--ink-muted);
+    margin-bottom:36px;
+  }
+  .callout strong{ color:var(--ink); }
+
+  /* milestone strip */
+  .milestones{
+    display:flex; overflow-x:auto; gap:0; margin-bottom:44px;
+    padding-bottom:6px;
+    scrollbar-width:thin;
+  }
+  .milestone{
+    flex:0 0 auto; width:150px; position:relative; padding:0 14px 0 0;
+  }
+  .milestone .line{
+    height:3px; background:var(--border); position:relative; margin-bottom:14px;
+  }
+  .milestone:first-child .line{ border-top-left-radius:3px; border-bottom-left-radius:3px; }
+  .milestone .dot{
+    position:absolute; top:-5px; left:0; width:13px; height:13px; border-radius:50%;
+    background:var(--accent); border:2px solid var(--bg); box-shadow:0 0 0 2px var(--accent);
+  }
+  .milestone .date{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent); font-weight:600; }
+  .milestone .label{ font-size:13px; color:var(--ink); font-weight:600; margin-top:2px; }
+  .milestone .countdown{ font-size:11.5px; color:var(--ink-faint); margin-top:3px; }
+
+  /* overall progress */
+  .overall{
+    display:flex; align-items:center; gap:16px; margin-bottom:40px;
+    background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px;
+    box-shadow:var(--shadow);
+  }
+  .overall .bar-track{ flex:1; height:10px; background:var(--surface-2); border-radius:100px; overflow:hidden; }
+  .overall .bar-fill{ height:100%; background:var(--accent); border-radius:100px; transition:width .3s ease; width:0%; }
+  .overall .pct{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; min-width:42px; text-align:right; }
+  .overall .label{ font-size:13px; color:var(--ink-muted); white-space:nowrap; }
+
+  /* phases */
+  .phase{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    box-shadow:var(--shadow);
+    margin-bottom:22px; overflow:hidden;
+  }
+  .phase-head{ padding:20px 22px 16px; border-bottom:1px solid var(--border); }
+  .phase-head .num{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+  .phase-head h2{ font-size:22px; font-weight:600; margin-top:2px; }
+  .phase-head .dates{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-muted); margin-top:4px; }
+  .phase-head .goal{ font-size:14.5px; color:var(--ink-muted); margin-top:8px; max-width:62ch; }
+  .phase-bar-track{ height:6px; background:var(--surface-2); }
+  .phase-bar-fill{ height:100%; background:var(--amber); width:0%; transition:width .3s ease; }
+
+  .tasklist{ list-style:none; margin:0; padding:8px 10px; }
+  .task{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:10px 12px; border-radius:8px;
+  }
+  .task:hover{ background:var(--surface-2); }
+  .task input[type=checkbox]{
+    margin-top:3px; width:17px; height:17px; accent-color:var(--accent); flex:0 0 auto; cursor:pointer;
+  }
+  .task .txt{ flex:1; font-size:14.5px; }
+  .task.done .txt{ color:var(--ink-faint); text-decoration:line-through; }
+  .role{
+    flex:0 0 auto; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600;
+    letter-spacing:.04em; padding:3px 8px; border-radius:6px; white-space:nowrap;
+    background:var(--status-progress-soft); color:var(--status-progress);
+  }
+  .role[data-role="ARTE"]{ background:var(--accent-soft); color:var(--accent); }
+  .role[data-role="DOC"]{ background:var(--status-done-soft); color:var(--status-done); }
+  .role[data-role="TODOS"], .role[data-role="LÍDER"]{ background:var(--surface-2); color:var(--ink-muted); }
+
+  /* roles section */
+  .roles-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;
+    margin-top:16px;
+  }
+  .role-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px;
+  }
+  .role-card h3{ font-size:15px; font-weight:600; margin-bottom:4px; }
+  .role-card p{ font-size:13px; color:var(--ink-muted); margin:0 0 8px; }
+  .role-card .who{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent); font-weight:600; }
+
+  section.block{ margin-bottom:44px; }
+  section.block > h2{ font-size:20px; margin-bottom:4px; }
+  section.block > .desc{ font-size:14px; color:var(--ink-muted); margin-bottom:4px; }
+
+  footer{
+    margin-top:56px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:13px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+  footer a{ color:var(--accent); text-decoration:none; }
+
+  @media (max-width:600px){
+    .overall{ flex-wrap:wrap; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Jogo Korno's · Grupo 07</span>
+    <h1>Korno's — Roadmap de Desenvolvimento</h1>
+    <p class="sub">Jogo de tycoon/simulação feito em Godot. Este quadro cobre tudo que a gente precisa fazer, do zero até a apresentação final.</p>
+    <div class="meta-row">
+      <span class="chip">Vitória</span>
+      <span class="chip">Luis Carlos</span>
+      <span class="chip">Sofia</span>
+      <span class="chip">Sabryna</span>
+      <span class="chip">Rhayane</span>
+      <span class="sep">·</span>
+      <span class="chip mono">Engine: Godot</span>
+      <span class="chip"><a href="https://github.com/JogoKorno-s" target="_blank" rel="noopener">github.com/JogoKorno-s ↗</a></span>
+    </div>
+  </header>
+
+  <div class="milestones" id="milestones"></div>
+
+  <div class="overall">
+    <span class="label">Progresso geral</span>
+    <div class="bar-track"><div class="bar-fill" id="overall-fill"></div></div>
+    <span class="pct" id="overall-pct">0%</span>
+  </div>
+
+  <section class="block">
+    <h2>Fases do projeto</h2>
+    <p class="desc">Marque as tarefas conforme formos concluindo — o progresso fica salvo neste navegador.</p>
+  </section>
+
+  <div id="phases"></div>
+
+  <section class="block" id="roles-section">
+    <h2>Papéis sugeridos</h2>
+    <p class="desc">Uma divisão de frentes de trabalho — encaixem os nomes de cada um(a) conforme a afinidade e ajustem à vontade.</p>
+    <div class="roles-grid" id="roles-grid"></div>
+  </section>
+
+  <footer>
+    <span>Korno's · roadmap gerado em 31/08/2026 — reabra e edite as marcações quando quiser.</span>
+    <a href="https://github.com/JogoKorno-s" target="_blank" rel="noopener">Repositório no GitHub ↗</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'kornos-roadmap-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+  var state = loadState();
+
+  var milestones = [
+    {date:'2026-09-01', label:'Kickoff do projeto'},
+    {date:'2026-09-14', label:'GDD e UML fechados'},
+    {date:'2026-09-28', label:'Protótipo jogável'},
+    {date:'2026-10-26', label:'Versão beta completa'},
+    {date:'2026-11-09', label:'Feature freeze'},
+    {date:'2026-11-16', label:'Monografia finalizada'},
+    {date:'2026-11-22', label:'Ensaio geral'},
+    {date:'2026-11-23', label:'Entrega final'}
+  ];
+
+  var phases = [
+    {
+      id:'f0', num:'FASE 0', name:'Organização & Concepção',
+      dates:'01–14 de setembro · 2 semanas',
+      goal:'Fechar o que o jogo é de fato, formalizar a modelagem e montar a casa (repositório, board, papéis).',
+      tasks:[
+        {t:'Definir o GDD: tema, público-alvo, core loop do tycoon, condições de progressão/vitória', r:'TODOS'},
+        {t:'Fechar a economia do jogo (moeda, custos, receitas, upgrades)', r:'DESIGN'},
+        {t:'Finalizar os diagramas UML (casos de uso, classes, objetos, sequência)', r:'DOC'},
+        {t:'Estruturar o GitHub: branches, board de tarefas (Issues/Projects), README com o escopo', r:'TODOS'},
+        {t:'Definir os papéis fixos de cada integrante no projeto', r:'TODOS'},
+        {t:'Montar um moodboard de referências visuais', r:'ARTE'}
+      ]
+    },
+    {
+      id:'f1', num:'FASE 1', name:'Pré-produção / Protótipo',
+      dates:'15–28 de setembro · 2 semanas',
+      goal:'Um protótipo jogável do núcleo do jogo, sem arte final, provando que o core loop funciona.',
+      tasks:[
+        {t:'Configurar o projeto no Godot (pastas, cenas, autoloads, convenções de código)', r:'PROG'},
+        {t:'Implementar o core loop mínimo (produzir → vender → reinvestir) com placeholders', r:'PROG'},
+        {t:'HUD provisório (saldo, produção, tempo)', r:'PROG'},
+        {t:'Primeiros testes internos de jogabilidade', r:'TODOS'},
+        {t:'Definir paleta de arte final e começar sprites básicos', r:'ARTE'}
+      ]
+    },
+    {
+      id:'f2', num:'FASE 2', name:'Produção Core',
+      dates:'29 de setembro – 26 de outubro · 4 semanas',
+      goal:'Todas as mecânicas principais implementadas e jogáveis de ponta a ponta.',
+      tasks:[
+        {t:'Sistema de economia completo (preços dinâmicos, upgrades, custos)', r:'PROG'},
+        {t:'Sistema de progressão e desbloqueios', r:'PROG'},
+        {t:'Sistema de salvar/carregar jogo', r:'PROG'},
+        {t:'Telas de menu principal, pausa e configurações', r:'PROG'},
+        {t:'Sprites finais dos elementos principais do jogo', r:'ARTE'},
+        {t:'Música e efeitos sonoros básicos', r:'ARTE'},
+        {t:'Teste de jogabilidade a cada semana (mini sprint review)', r:'TODOS'}
+      ]
+    },
+    {
+      id:'f3', num:'FASE 3', name:'Polimento & Conteúdo',
+      dates:'27 de outubro – 09 de novembro · 2 semanas',
+      goal:'Fechar a versão beta: balancear, corrigir bugs e preparar a experiência para quem nunca jogou.',
+      tasks:[
+        {t:'Balancear economia e dificuldade', r:'DESIGN'},
+        {t:'Bug bash em grupo (todo mundo testa e reporta)', r:'TODOS'},
+        {t:'Tutorial/onboarding do jogador', r:'PROG'},
+        {t:'Testar com pessoas de fora do grupo (colegas de turma)', r:'TODOS'},
+        {t:'Congelar novas features a partir de 09/11', r:'LÍDER'}
+      ]
+    },
+    {
+      id:'f4', num:'FASE 4', name:'Documentação do Projeto',
+      dates:'20 de outubro – 16 de novembro · paralelo, intensifica no fim',
+      goal:'Monografia e material de apresentação prontos para entrega.',
+      tasks:[
+        {t:'Escrever a monografia (introdução, fundamentação teórica, metodologia)', r:'DOC'},
+        {t:'Atualizar os diagramas UML para refletir o jogo final', r:'DOC'},
+        {t:'Capturar telas e vídeo de gameplay para o documento', r:'ARTE'},
+        {t:'Montar os slides de apresentação', r:'DOC'},
+        {t:'Revisão final de texto e normas ABNT', r:'DOC'}
+      ]
+    },
+    {
+      id:'f5', num:'FASE 5', name:'Ensaio & Entrega',
+      dates:'16–29 de novembro',
+      goal:'Chegar afiados na apresentação final, sem sustos de última hora.',
+      tasks:[
+        {t:'Ensaio geral da apresentação — todo mundo fala', r:'TODOS'},
+        {t:'Ajustes finais (só bugs críticos, nada de features novas)', r:'PROG'},
+        {t:'Enviar a entrega oficial (documento + build do jogo)', r:'LÍDER'},
+        {t:'Apresentação final do projeto', r:'TODOS'}
+      ]
+    }
+  ];
+
+  var roles = [
+    {name:'Programação (Godot)', desc:'Sistemas de jogo, UI, save/load — geralmente 2 pessoas.', who:'a definir'},
+    {name:'Game Design & Economia', desc:'Balanceamento, progressão, regras do tycoon.', who:'a definir'},
+    {name:'Arte & Áudio', desc:'Sprites, paleta visual, música e efeitos.', who:'a definir'},
+    {name:'Documentação do Projeto', desc:'Relatório escrito, UML final, slides, normas ABNT.', who:'a definir'},
+    {name:'QA & Testes', desc:'Testar builds, reportar bugs — função compartilhada por todos.', who:'todos'}
+  ];
+
+  function fmtDate(iso){
+    var d = new Date(iso+'T00:00:00');
+    return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+  }
+  function daysUntil(iso){
+    var target = new Date(iso+'T00:00:00');
+    var now = new Date('2026-08-31T00:00:00');
+    return Math.round((target-now)/86400000);
+  }
+
+  // render milestones
+  var msEl = document.getElementById('milestones');
+  milestones.forEach(function(m){
+    var d = daysUntil(m.date);
+    var countdown = d > 0 ? ('faltam ' + d + ' dias') : (d === 0 ? 'é hoje' : 'passou');
+    var el = document.createElement('div');
+    el.className = 'milestone';
+    el.innerHTML =
+      '<div class="line"><div class="dot"></div></div>' +
+      '<div class="date mono">' + fmtDate(m.date) + '</div>' +
+      '<div class="label">' + m.label + '</div>' +
+      '<div class="countdown">' + countdown + '</div>';
+    msEl.appendChild(el);
+  });
+
+  // render phases
+  var phasesEl = document.getElementById('phases');
+  phases.forEach(function(phase){
+    var card = document.createElement('div');
+    card.className = 'phase';
+
+    var head = document.createElement('div');
+    head.className = 'phase-head';
+    head.innerHTML =
+      '<div class="num">' + phase.num + '</div>' +
+      '<h2>' + phase.name + '</h2>' +
+      '<div class="dates mono">' + phase.dates + '</div>' +
+      '<div class="goal">' + phase.goal + '</div>';
+    card.appendChild(head);
+
+    var barTrack = document.createElement('div');
+    barTrack.className = 'phase-bar-track';
+    var barFill = document.createElement('div');
+    barFill.className = 'phase-bar-fill';
+    barFill.id = phase.id + '-bar';
+    barTrack.appendChild(barFill);
+    card.appendChild(barTrack);
+
+    var list = document.createElement('ul');
+    list.className = 'tasklist';
+    phase.tasks.forEach(function(task, i){
+      var taskId = phase.id + '-' + i;
+      var li = document.createElement('li');
+      li.className = 'task' + (state[taskId] ? ' done' : '');
+      li.innerHTML =
+        '<input type="checkbox" id="' + taskId + '" ' + (state[taskId] ? 'checked' : '') + '>' +
+        '<span class="txt">' + task.t + '</span>' +
+        '<span class="role" data-role="' + task.r + '">' + task.r + '</span>';
+      list.appendChild(li);
+    });
+    card.appendChild(list);
+    phasesEl.appendChild(card);
+  });
+
+  // render roles
+  var rolesGrid = document.getElementById('roles-grid');
+  roles.forEach(function(r){
+    var el = document.createElement('div');
+    el.className = 'role-card';
+    el.innerHTML = '<h3>' + r.name + '</h3><p>' + r.desc + '</p><div class="who">' + r.who + '</div>';
+    rolesGrid.appendChild(el);
+  });
+
+  // progress calc
+  function updateProgress(){
+    var totalAll = 0, doneAll = 0;
+    phases.forEach(function(phase){
+      var total = phase.tasks.length, done = 0;
+      phase.tasks.forEach(function(task, i){
+        var taskId = phase.id + '-' + i;
+        if(state[taskId]) done++;
+      });
+      totalAll += total; doneAll += done;
+      var pct = total ? Math.round(done/total*100) : 0;
+      var bar = document.getElementById(phase.id + '-bar');
+      if(bar) bar.style.width = pct + '%';
+    });
+    var overallPct = totalAll ? Math.round(doneAll/totalAll*100) : 0;
+    document.getElementById('overall-fill').style.width = overallPct + '%';
+    document.getElementById('overall-pct').textContent = overallPct + '%';
+  }
+
+  document.addEventListener('change', function(e){
+    if(e.target && e.target.type === 'checkbox' && e.target.id){
+      state[e.target.id] = e.target.checked;
+      saveState(state);
+      e.target.closest('.task').classList.toggle('done', e.target.checked);
+      updateProgress();
+    }
+  });
+
+  updateProgress();
+})();
+</script>
